@@ -1,18 +1,45 @@
 import { useRef, useState } from "react";
 import Header from "./Header";
 import {dataCheck} from "../utils/validate.js";
+import {  createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../utils/firebase.js";
+import { getAuth } from "firebase/auth";
+
+
 
 const Login = () => {
+
+  const auth = getAuth();
   const [isSignInForm, setIsSignInForm] = useState(true);
   const [errorMsg,setErrorMsg] = useState(null);
 
-  const emailRef = useRef(null);
-  const passwordRef = useRef(null);
+  const email = useRef(null);
+  const password = useRef(null);
+  const name = useRef(null);
 
   const handleButtonClick = (e) => {
     e.preventDefault();
-    const msg = dataCheck(emailRef.current.value, passwordRef.current.value);
+    const msg = dataCheck(email.current.value, password.current.value);
     setErrorMsg(msg);
+    if (msg) return ;
+
+    if(!isSignInForm){
+      //signup logic
+      createUserWithEmailAndPassword(auth, email.current.value, password.current.value)
+  .then((userCredential) => {
+    // Signed up 
+    const user = userCredential.user;
+    // ...
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    setErrorMsg(errorMessage + "-" + errorCode);
+    // ..
+  });
+
+    }
+
   }
 
   const toggleSignInForm = () => {
@@ -34,19 +61,20 @@ const Login = () => {
 
         {!isSignInForm && (
           <input
+          ref = {name}
             type="text"
             placeholder="Full Name"
             className="p-4 my-4 w-full bg-gray-700"
           />
         )}
         <input
-        ref = {emailRef}
+        ref = {email}
           type="text"
           placeholder="Email Address"
           className="p-4 my-4 w-full bg-gray-700"
         />
         <input
-        ref = {passwordRef}
+        ref = {password}
           type="password"
           placeholder="Password"
           className="p-4 my-4 w-full bg-gray-700"
