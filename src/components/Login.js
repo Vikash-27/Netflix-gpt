@@ -4,10 +4,13 @@ import {dataCheck} from "../utils/validate.js";
 import {  createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../utils/firebase.js";
 import { getAuth } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
 
 
 const Login = () => {
+  const navigate = useNavigate();
 
   const auth = getAuth();
   const [isSignInForm, setIsSignInForm] = useState(true);
@@ -29,6 +32,8 @@ const Login = () => {
   .then((userCredential) => {
     // Signed up 
     const user = userCredential.user;
+    console.log(user);
+    // navigate("/browse");
     // ...
   })
   .catch((error) => {
@@ -39,6 +44,22 @@ const Login = () => {
   });
 
     }
+  else{
+    signInWithEmailAndPassword(auth, email.current.value, password.current.value)
+  .then((userCredential) => {
+    // Signed in 
+    const user = userCredential.user;
+    console.log(user);
+    navigate("/browse");
+    // ...
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    setErrorMsg(errorMessage + "-" + errorCode);
+  });
+
+  }
 
   }
 

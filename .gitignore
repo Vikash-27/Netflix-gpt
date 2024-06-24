@@ -5,8 +5,10 @@
 /node_modules
 /.pnp
 .pnp.js
-/.firebaseCredentials.js
+# Ignore firebase.js and firebasecredentials.js files
 firebase.js
+firebasecredentials.js
+
 
 # testing
 /coverage
