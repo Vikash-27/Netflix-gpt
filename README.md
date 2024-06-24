@@ -1,3 +1,8 @@
+#Live Deployed on Vercel
+
+Try here https://netflix-gpt-omega-one.vercel.app/
+Note :- Click on details and click visit this site to proceed further 
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
