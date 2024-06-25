@@ -6,8 +6,8 @@
 /.pnp
 .pnp.js
 # Ignore firebase.js and firebasecredentials.js files
-firebase.js
-firebasecredentials.js
+# firebase.js
+# firebasecredentials.js
 
 
 # testing
